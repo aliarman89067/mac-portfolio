@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { dockApps, WINDOW_CONFIG } from "#constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";

@@ -12,7 +12,6 @@ import {
   Share,
   ShieldHalf,
 } from "lucide-react";
-import React from "react";
 
 const Safari = () => {
   return (
