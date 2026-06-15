@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, type ComponentType } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
@@ -7,8 +7,8 @@ import useWindowStore from "../../store/window";
 import type { WINDOW_CONFIG } from "#constants";
 import clsx from "clsx";
 
-const WindowWrapper = (Component: any, windowKey: string) => {
-  const Wrapped = (props: any) => {
+const WindowWrapper = (Component: ComponentType, windowKey: string) => {
+  const Wrapped = () => {
     const { focusWindow, windows } = useWindowStore();
     const { isOpen, zIndex, isMaximized } =
       windows[windowKey as keyof typeof WINDOW_CONFIG];
@@ -112,7 +112,7 @@ const WindowWrapper = (Component: any, windowKey: string) => {
         style={{ zIndex }}
         className={clsx("absolute")}
       >
-        <Component {...props} />
+        <Component />
       </section>
     );
   };

@@ -8,7 +8,7 @@ interface WindowStore {
   minimized: string[];
   minimizedWindow: (windowKey: string) => void;
   maximizeWindow: (windowKey: string) => void;
-  openWindow: (windowKey: string, data: any) => void;
+  openWindow: (windowKey: string, data: unknown) => void;
   closeWindow: (windowKey: string) => void;
   focusWindow: (windowKey: string) => void;
 }
@@ -18,7 +18,7 @@ const useWindowStore = create<WindowStore>()(
     windows: WINDOW_CONFIG,
     minimized: [],
     nextZIndex: INITIAL_Z_INDEX + 1,
-    openWindow: (windowKey, data: any = null) =>
+    openWindow: (windowKey, data: unknown = null) =>
       set((state) => {
         const win = state.windows[windowKey as keyof typeof WINDOW_CONFIG];
         win.isOpen = true;

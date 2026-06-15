@@ -7,7 +7,6 @@ import WindowWrapper from "#hoc/window-wrapper";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { useState } from "react";
-import useWindowStore from "../../store/window";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -16,8 +15,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 const Resume = () => {
   const [page, setPage] = useState(1);
-  const { windows } = useWindowStore();
-  const isMaximized = windows.resume.isMaximized;
   return (
     <>
       <div id="window-header">

@@ -2,7 +2,7 @@ import { WindowControls } from "#components";
 import { locations } from "#constants";
 import WindowWrapper from "#hoc/window-wrapper";
 import { Search } from "lucide-react";
-import useLocationStore from "../../store/location";
+import useLocationStore, { type LocationType } from "../../store/location";
 import clsx from "clsx";
 import useWindowStore from "../../store/window";
 
@@ -10,23 +10,30 @@ const Finder = () => {
   const { activeLocation, setActiveLocation } = useLocationStore();
   const { openWindow } = useWindowStore();
 
-  const renderList = (items: any[]) =>
+  const renderList = (
+    items: {
+      id: number;
+      icon: string;
+      name: string;
+    }[],
+  ) =>
     items.map((item) => (
       <li
         key={item.id}
         className={clsx(
           item.id === activeLocation?.id ? "active" : "not-active",
         )}
-        onClick={() => setActiveLocation(item)}
+        onClick={() => setActiveLocation(item as LocationType | null)}
       >
         <img src={item.icon} alt={item.name} className="w-4" />
         <p className="text-sm font-medium truncate">{item.name}</p>
       </li>
     ));
 
-  const openItem = (item: any) => {
+  const openItem = (item: { fileType: string; kind: string; href: string }) => {
     if (item.fileType === "pdf") return openWindow("resume", null);
-    if (item.kind === "folder") return setActiveLocation(item);
+    if (item.kind === "folder")
+      return setActiveLocation(item as unknown as LocationType | null);
     if (["fig", "url"].includes(item.fileType) && item.href)
       return window.open(item.href, "_blank");
 
@@ -54,9 +61,17 @@ const Finder = () => {
           {activeLocation?.children.map((item) => (
             <li
               key={item.id}
-              //   @ts-ignore
+              //   @ts-expect-error conflication because of types
               className={item.position}
-              onClick={() => openItem(item)}
+              onClick={() =>
+                openItem(
+                  item as unknown as {
+                    fileType: string;
+                    kind: string;
+                    href: string;
+                  },
+                )
+              }
             >
               <img src={item.icon} alt={item.name} />
               <p>{item.name}</p>

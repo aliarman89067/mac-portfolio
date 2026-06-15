@@ -4,7 +4,7 @@ import { locations } from "../src/constants";
 
 const DEFAULT_LOCATION = locations.work;
 
-type LocationType = (typeof locations)[keyof typeof locations];
+export type LocationType = (typeof locations)[keyof typeof locations];
 
 interface LocationStore {
   activeLocation: LocationType | null;
